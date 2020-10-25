@@ -18,19 +18,20 @@ function signJwt(data) {
  * @param {String} token jwt token
  * @returns {any} returns data payload
  */
-function verifyJwt(token) {
-  //----------------------------------------------------
-  // const authorization = req.headers.authorization
-  // if (authorization) {
-  //   try {
-  //     const checkUser = jwt.verify(authorization, jwtConfig.secret)
-  //     req.user = checkUser
-  //     next()
-  //   } catch (error) {
-  //     res.status(401).send('unauthorization')
-  //   }
-  // }
-  //-----------------------------------------------------
+function verifyJwt(req, res, next) {
+  const authorization = req.headers.authorization
+  if (authorization) {
+    const token = authorization.split(' ')[1]
+    try {
+      const tokenPayload = jwt.verify(token, secret)
+      req.user = tokenPayload
+      next()
+    } catch (error) {
+      res.status(401).send('TOKEN EXPIRED, PLEASE RE-LOGIN')
+    }
+  } else {
+    res.status(401).send('TOKEN REQUIRED')
+  }
 
 }
 
