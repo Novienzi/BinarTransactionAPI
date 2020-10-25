@@ -1,4 +1,7 @@
-const db = require("../connections/dbConnection")
+const db = require("../connections/dbConnection");
+const transactionModel = require("../models/transactionModel");
+const userModel = require("../models/userModel");
+const vehiclesModel = require("../models/vehiclesModel");
 
 /**
  * Edit data
@@ -29,7 +32,9 @@ function editData(tableName, id, data) {
     if (tableName == 'user') {
       shapedData = shapeObject(data, userModel)
     }
-
+    if (tableName == 'vehicles') {
+      shapedData = shapeObject(data, vehiclesModel)
+    }
     if (!shapedData) return false
 
     db.get(tableName)

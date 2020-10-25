@@ -7,9 +7,10 @@ const app = express.Router()
 app.post('/auth/login', (req, res) => {
   const body = req.body
   const result = getData('user', body)
-  if (result) {
-    const token = signJwt(result)
-    result.accessToken = token
+  //result[0] = ambil value dari array index 0
+  if (result[0]) {
+    const token = signJwt(result[0])
+    result[0].accessToken = token
     res.send(result)
   } else {
     res.status(400).send('Bad request')
