@@ -6,16 +6,13 @@ const app = express.Router()
 
 app.use(verifyJwt)
 app.patch('/admin/vehicles', (req, res) => {
-    const body = req.body
-    const id = req.query.id
-    const result = editData('vehicles', id, body)
-    if (result) {
-
-        res.send(result)
+    const result = editData('vehicles', req.body.id, req.body);
+    if (!result) {
+        res.status(400).send('Bad request');
     } else {
-        // called if request body object key is lacking
-        res.status(400).send('Bad request')
+        res.send(result);
     }
+    return;
 })
 
 module.exports = app

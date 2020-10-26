@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const getData = require('../controllers/getController');
 const { secret } = require('../jwtConfig');
 const jwtConfig = require('../jwtConfig')
 
@@ -20,6 +21,7 @@ function signJwt(data) {
  */
 function verifyJwt(req, res, next) {
   const authorization = req.headers.authorization
+  //const role = getData('user', req.query.role)
   if (authorization) {
     const token = authorization.split(' ')[1]
     try {
