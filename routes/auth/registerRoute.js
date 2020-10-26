@@ -9,7 +9,7 @@ const uid = require('uid')
 app.post('/auth/register', (req, res) => {
   const body = req.body
   const isUserExists = getData('user', body)
-  if (!isUserExists) {
+  if (!isUserExists || isUserExists) {
     body.id = uid()
     const result = addData('user', body)
     if (result) {
