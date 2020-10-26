@@ -16,7 +16,21 @@ function signJwt(data) {
  * @param {String} token jwt token
  * @returns {any} returns data payload
  */
-function verifyJwt(token) {
+function verifyJwt(req, res, next) {
+  const authorization = req.headers.authorization
+  //const role = getData('user', req.query.role)
+  if (authorization) {
+    const token = authorization.split(' ')[1]
+    try {
+      const tokenPayload = jwt.verify(token, jwtConfig.secret, jwtConfig.options)
+      req.user = tokenPayload
+      next()
+    } catch (error) {
+      res.status(401).send('TOKEN EXPIRED, PLEASE RE-LOGIN')
+    }
+  } else {
+    res.status(401).send('TOKEN REQUIRED')
+  }
 
 }
 

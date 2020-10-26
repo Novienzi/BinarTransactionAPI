@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 
+
 // now, we don't need body-parser, express has their built-in body parser
 app.use(express.json())
 
